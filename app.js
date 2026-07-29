@@ -11,20 +11,10 @@ Example:
 https://buy.stripe.com/xxxxx
 
 Until then, the button will show a message.
-*/
-
-const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/9B63cwehHaev2jG47Mdwc00";
-
-document.getElementById("class="primary"
-onclick="upgrade()">
-
-Unlock Contractor Pro").addEventListener("click", () => {
-    window.location.href = STRIPE_PAYMENT_LINK;
-});
-
-
-
-
+*/const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/9B63cwehHaev2jG47Mdwc00";
+function upgrade() {
+  window.open(STRIPE_PAYMENT_LINK, "https://buy.stripe.com/9B63cwehHaev2jG47Mdwc00");
+}
 
 /* ==========================================
    FREE LIMIT SYSTEM
