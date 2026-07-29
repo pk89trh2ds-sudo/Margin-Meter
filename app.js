@@ -638,3 +638,17 @@ function upgradeLifetime(){
 window.location.href = STRIPE_LIFETIME_LINK;
 
 }
+function upgradeMonthly(){
+
+window.location.href =
+STRIPE_MONTHLY_LINK;
+
+}
+
+
+function upgradeLifetime(){
+
+window.location.href =
+STRIPE_LIFETIME_LINK;
+
+}
