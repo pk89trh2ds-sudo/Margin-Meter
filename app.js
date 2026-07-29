@@ -1,9 +1,5 @@
-// Margin Meter MVP
-
-
 const STRIPE_PAYMENT_LINK =
 "https://buy.stripe.com/9B63cwehHaev2jG47Mdwc00";
-
 
 
 const FREE_DAILY_LIMIT = 1;
@@ -18,11 +14,8 @@ let data = localStorage.getItem("marginMeterUsage");
 if(!data){
 
 return {
-
 count:0,
-
 date:new Date().toDateString()
-
 };
 
 }
@@ -31,7 +24,6 @@ date:new Date().toDateString()
 return JSON.parse(data);
 
 }
-
 
 
 
@@ -59,11 +51,8 @@ let today = new Date().toDateString();
 if(usage.date !== today){
 
 usage = {
-
 count:0,
-
 date:today
-
 };
 
 saveUsage(usage);
@@ -83,15 +72,11 @@ function increaseUsage(){
 
 let usage = getUsage();
 
-
 usage.count++;
-
 
 saveUsage(usage);
 
 }
-
-
 
 
 
@@ -139,20 +124,23 @@ markup:25
 
 
 
-let p = presets[type];
+let preset = presets[type];
 
 
-if(!p) return;
+document.getElementById("materials").value =
+preset.materials;
 
 
+document.getElementById("hours").value =
+preset.hours;
 
-document.getElementById("materials").value=p.materials;
 
-document.getElementById("hours").value=p.hours;
+document.getElementById("rate").value =
+preset.rate;
 
-document.getElementById("rate").value=p.rate;
 
-document.getElementById("markup").value=p.markup;
+document.getElementById("markup").value =
+preset.markup;
 
 
 }
@@ -197,25 +185,23 @@ Number(document.getElementById("markup").value) || 0;
 
 
 
-let labor =
-hours * rate;
+let labor = hours * rate;
 
 
-let cost =
-materials + labor;
+let cost = materials + labor;
 
 
-let price =
-cost * (1 + markup / 100);
+let price = cost * (1 + markup / 100);
 
 
-let profit =
-price - cost;
+let profit = price - cost;
 
 
 let margin =
-price > 0 ?
-(profit / price) * 100 :
+price > 0
+?
+(profit / price) * 100
+:
 0;
 
 
@@ -248,6 +234,7 @@ updateMessage(margin);
 
 
 
+
 function updateMessage(margin){
 
 
@@ -270,7 +257,6 @@ message.innerText="This job may not cover mistakes or unexpected costs.";
 
 }
 
-
 else if(margin < 20){
 
 box.className="risk warning";
@@ -280,7 +266,6 @@ box.innerText="Warning: Tight margin";
 message.innerText="Consider increasing your price.";
 
 }
-
 
 else{
 
@@ -294,6 +279,7 @@ message.innerText="This job appears priced safely.";
 
 
 }
+
 
 
 
@@ -325,11 +311,197 @@ behavior:"smooth"
 
 
 
-function upgrade(){
 
+
+function upgrade(){
 
 window.location.href =
 STRIPE_PAYMENT_LINK;
 
+}
+
+
+
+
+
+
+
+
+
+// ==========================
+// SAVED ESTIMATES
+// ==========================
+
+
+
+function saveEstimate(){
+
+
+let name =
+document.getElementById("jobName").value;
+
+
+if(!name){
+
+name="Unnamed Job";
 
 }
+
+
+
+let estimate = {
+
+id:Date.now(),
+
+name:name,
+
+cost:
+document.getElementById("totalCost").innerText,
+
+price:
+document.getElementById("revenue").innerText,
+
+profit:
+document.getElementById("profit").innerText,
+
+margin:
+document.getElementById("margin").innerText
+
+};
+
+
+
+let saved =
+JSON.parse(
+localStorage.getItem("savedEstimates")
+)
+|| [];
+
+
+
+saved.push(estimate);
+
+
+
+localStorage.setItem(
+"savedEstimates",
+JSON.stringify(saved)
+);
+
+
+
+displayEstimates();
+
+
+}
+
+
+
+
+
+function displayEstimates(){
+
+
+let box =
+document.getElementById("savedEstimates");
+
+
+if(!box){
+
+return;
+
+}
+
+
+
+let saved =
+JSON.parse(
+localStorage.getItem("savedEstimates")
+)
+|| [];
+
+
+
+if(saved.length === 0){
+
+box.innerHTML =
+"No saved estimates yet.";
+
+return;
+
+}
+
+
+
+box.innerHTML="";
+
+
+
+saved.forEach(item => {
+
+
+box.innerHTML += `
+
+<div class="estimate-card">
+
+<h3>${item.name}</h3>
+
+<p>Cost: $${item.cost}</p>
+
+<p>Price: $${item.price}</p>
+
+<p>Profit: $${item.profit}</p>
+
+<p>Margin: ${item.margin}%</p>
+
+<button onclick="deleteEstimate(${item.id})">
+Delete
+</button>
+
+</div>
+
+`;
+
+});
+
+
+}
+
+
+
+
+function deleteEstimate(id){
+
+
+let saved =
+JSON.parse(
+localStorage.getItem("savedEstimates")
+)
+|| [];
+
+
+
+saved =
+saved.filter(item => item.id !== id);
+
+
+
+localStorage.setItem(
+"savedEstimates",
+JSON.stringify(saved)
+);
+
+
+
+displayEstimates();
+
+}
+
+
+
+
+window.onload=function(){
+
+displayEstimates();
+
+};

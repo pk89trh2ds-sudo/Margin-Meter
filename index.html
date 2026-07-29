@@ -2,25 +2,37 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Margin Meter | Contractor Profit Calculator</title>
 
-<meta name="description" content="Calculate contractor job costs, pricing, profit margins, and avoid undercharging.">
+<meta name="description" content="Calculate contractor profit margins, job costs, and pricing before accepting work.">
 
 <link rel="stylesheet" href="styles.css">
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
+
 <header>
+
 <h1>Margin Meter</h1>
-<p>Know your true profit before you accept the job.</p>
+
+<p>
+Know your true profit before you accept the job.
+</p>
+
 </header>
+
+
+
 
 
 <section class="card">
@@ -51,31 +63,90 @@ Concrete
 
 
 
+
+
+
+
 <section class="card">
+
 
 <h2>Job Calculator</h2>
 
 
-<label>Material Cost</label>
-<input id="materials" type="number" placeholder="Example: 2500">
+<label>
+Job Name
+</label>
 
-
-<label>Labor Hours</label>
-<input id="hours" type="number" placeholder="Example: 40">
-
-
-<label>Hourly Labor Rate</label>
-<input id="rate" type="number" placeholder="Example: 50">
-
-
-<label>Markup Percentage</label>
-<input id="markup" type="number" placeholder="Example: 25">
+<input 
+id="jobName"
+type="text"
+placeholder="Example: Smith Bathroom Remodel"
+>
 
 
 
-<button class="primary" onclick="calculateProfit()">
+<label>
+Material Cost
+</label>
+
+<input
+id="materials"
+type="number"
+placeholder="Example: 2500"
+>
+
+
+
+<label>
+Labor Hours
+</label>
+
+<input
+id="hours"
+type="number"
+placeholder="Example: 40"
+>
+
+
+
+<label>
+Hourly Labor Rate
+</label>
+
+<input
+id="rate"
+type="number"
+placeholder="Example: 50"
+>
+
+
+
+<label>
+Markup Percentage
+</label>
+
+<input
+id="markup"
+type="number"
+placeholder="Example: 25"
+>
+
+
+
+<button 
+class="primary"
+onclick="calculateProfit()">
 
 Calculate Profit
+
+</button>
+
+
+<button
+class="save-btn"
+onclick="saveEstimate()">
+
+Save Estimate
 
 </button>
 
@@ -85,37 +156,71 @@ Calculate Profit
 
 
 
+
+
+
+
 <section class="card">
 
-<h2>Your Results</h2>
+
+<h2>
+Your Results
+</h2>
+
 
 
 <div class="result-row">
+
 <span>Total Cost</span>
-<strong>$<span id="totalCost">0</span></strong>
+
+<strong>
+$<span id="totalCost">0</span>
+</strong>
+
 </div>
 
 
+
 <div class="result-row">
+
 <span>Customer Price</span>
-<strong>$<span id="revenue">0</span></strong>
+
+<strong>
+$<span id="revenue">0</span>
+</strong>
+
 </div>
 
 
+
 <div class="result-row">
+
 <span>Profit</span>
-<strong>$<span id="profit">0</span></strong>
+
+<strong>
+$<span id="profit">0</span>
+</strong>
+
 </div>
+
 
 
 <div class="result-row">
+
 <span>Profit Margin</span>
-<strong><span id="margin">0</span>%</strong>
+
+<strong>
+<span id="margin">0</span>%
+</strong>
+
 </div>
+
 
 
 <div id="riskBox" class="risk">
+
 Enter job details to calculate
+
 </div>
 
 
@@ -127,7 +232,38 @@ Enter job details to calculate
 
 
 
+
+
+
+
+
+<section class="card">
+
+
+<h2>
+Saved Estimates
+</h2>
+
+
+<div id="savedEstimates">
+
+No saved estimates yet.
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
 <section id="upgradeBox" class="card upgrade hidden">
+
 
 <h2>
 Unlock Contractor Pro
@@ -135,9 +271,12 @@ Unlock Contractor Pro
 
 
 <p>
+
 Stop losing money on jobs.
 
-Get unlimited calculations and future premium contractor tools.
+Get unlimited calculations,
+saved estimates, and premium contractor tools.
+
 </p>
 
 
@@ -146,7 +285,10 @@ $9/month
 </h3>
 
 
-<button class="primary" onclick="upgrade()">
+
+<button
+class="primary"
+onclick="upgrade()">
 
 Unlock Contractor Pro
 
@@ -158,23 +300,39 @@ Unlock Contractor Pro
 
 
 
+
+
+
 <section class="card">
 
-<h2>Why Contractors Use Margin Meter</h2>
+
+<h2>
+Why Contractors Use Margin Meter
+</h2>
+
 
 <ul>
 
 <li>Stop underpricing jobs</li>
+
 <li>Know your true margins</li>
+
 <li>Price work with confidence</li>
+
 <li>Avoid losing money from mistakes</li>
 
 </ul>
 
+
 </section>
 
 
+
+
+
 </div>
+
+
 
 
 <script src="app.js"></script>
