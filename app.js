@@ -11,7 +11,6 @@ const STRIPE_LIFETIME_LINK =
 
 
 
-
 // ===============================
 // TRADE PRESETS
 // ===============================
@@ -626,3 +625,16 @@ displayEstimates();
 
 
 };
+function upgradeMonthly(){
+
+window.location.href = STRIPE_MONTHLY_LINK;
+
+}
+
+
+
+function upgradeLifetime(){
+
+window.location.href = STRIPE_LIFETIME_LINK;
+
+}
