@@ -2,55 +2,30 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-Margin Meter | Contractor Profit Calculator
-</title>
+<title>Margin Meter | Contractor Profit Calculator</title>
 
-
-<meta name="description"
-content="Calculate contractor job costs, pricing, profit margins, and avoid undercharging.">
-
+<meta name="description" content="Calculate contractor job costs, pricing, profit margins, and avoid undercharging.">
 
 <link rel="stylesheet" href="styles.css">
 
 </head>
 
-
 <body>
-    
-
 
 <div class="container">
 
-
 <header>
-
-<h1>
-Margin Meter
-</h1>
-
-<p>
-Know your true profit before you accept the job.
-</p>
-
+<h1>Margin Meter</h1>
+<p>Know your true profit before you accept the job.</p>
 </header>
-
-
-
 
 
 <section class="card">
 
-
-<h2>
-Choose Your Trade
-</h2>
-
+<h2>Choose Your Trade</h2>
 
 <div class="preset-buttons">
 
@@ -58,94 +33,47 @@ Choose Your Trade
 Drywall
 </button>
 
-
 <button onclick="loadPreset('painting')">
 Painting
 </button>
-
 
 <button onclick="loadPreset('roofing')">
 Roofing
 </button>
 
-
 <button onclick="loadPreset('concrete')">
 Concrete
 </button>
 
-
 </div>
-
 
 </section>
 
 
 
-
-
-
-
 <section class="card">
 
-
-<h2>
-Job Calculator
-</h2>
+<h2>Job Calculator</h2>
 
 
-
-<label>
-Material Cost
-</label>
-
-<input
-id="materials"
-type="number"
-placeholder="Example: 2500"
->
+<label>Material Cost</label>
+<input id="materials" type="number" placeholder="Example: 2500">
 
 
+<label>Labor Hours</label>
+<input id="hours" type="number" placeholder="Example: 40">
 
-<label>
-Labor Hours
-</label>
 
-<input
-id="hours"
-type="number"
-placeholder="Example: 40"
->
+<label>Hourly Labor Rate</label>
+<input id="rate" type="number" placeholder="Example: 50">
+
+
+<label>Markup Percentage</label>
+<input id="markup" type="number" placeholder="Example: 25">
 
 
 
-<label>
-Hourly Labor Rate
-</label>
-
-<input
-id="rate"
-type="number"
-placeholder="Example: 50"
->
-
-
-
-<label>
-Markup Percentage
-</label>
-
-<input
-id="markup"
-type="number"
-placeholder="Example: 25"
->
-
-
-
-
-<button
-class="primary"
-onclick="calculateProfit()">
+<button class="primary" onclick="calculateProfit()">
 
 Calculate Profit
 
@@ -157,185 +85,101 @@ Calculate Profit
 
 
 
-
-
-
-
 <section class="card">
 
-
-<h2>
-Your Results
-</h2>
-
+<h2>Your Results</h2>
 
 
 <div class="result-row">
-
-<span>
-Total Cost
-</span>
-
-<strong>
-$<span id="totalCost">0</span>
-</strong>
-
+<span>Total Cost</span>
+<strong>$<span id="totalCost">0</span></strong>
 </div>
-
-
 
 
 <div class="result-row">
-
-<span>
-Customer Price
-</span>
-
-<strong>
-$<span id="revenue">0</span>
-</strong>
-
+<span>Customer Price</span>
+<strong>$<span id="revenue">0</span></strong>
 </div>
-
-
 
 
 <div class="result-row">
-
-<span>
-Profit
-</span>
-
-<strong>
-$<span id="profit">0</span>
-</strong>
-
+<span>Profit</span>
+<strong>$<span id="profit">0</span></strong>
 </div>
-
-
 
 
 <div class="result-row">
-
-<span>
-Profit Margin
-</span>
-
-<strong>
-<span id="margin">0</span>%
-</strong>
-
+<span>Profit Margin</span>
+<strong><span id="margin">0</span>%</strong>
 </div>
-
-
 
 
 <div id="riskBox" class="risk">
-
 Enter job details to calculate
-
 </div>
-
-
 
 
 <p id="message"></p>
 
 
-
 </section>
-
-
-
-
-
 
 
 
 
 <section id="upgradeBox" class="card upgrade hidden">
 
-
 <h2>
-You Found Your Profit Number
+Unlock Contractor Pro
 </h2>
 
 
 <p>
+Stop losing money on jobs.
 
-Don't lose money by guessing.
-
-Margin Meter Pro gives you unlimited calculations,
-saved estimates, and future job tracking.
-
+Get unlimited calculations and future premium contractor tools.
 </p>
 
 
-<h3>$9/month</h3>
+<h3>
+$9/month
+</h3>
 
 
-<button 
-  class="primary"
-  onclick="window.location.href='https://buy.stripe.com/9B63cwehHaev2jG47Mdwc00'">
-  Unlock Margin Meter Pro
+<button class="primary" onclick="upgrade()">
+
+Unlock Contractor Pro
+
 </button>
 
 
-
 </section>
-
-
-
-
-
 
 
 
 
 <section class="card">
 
-
-<h2>
-Why Contractors Use Margin Meter
-</h2>
-
+<h2>Why Contractors Use Margin Meter</h2>
 
 <ul>
 
-<li>
-Stop underpricing jobs
-</li>
-
-<li>
-Know your true margins
-</li>
-
-<li>
-Price work with confidence
-</li>
-
-<li>
-Avoid losing money on mistakes
-</li>
+<li>Stop underpricing jobs</li>
+<li>Know your true margins</li>
+<li>Price work with confidence</li>
+<li>Avoid losing money from mistakes</li>
 
 </ul>
-
 
 </section>
 
 
-
-
-
 </div>
-
-
 
 
 <script src="app.js"></script>
 
 
 </body>
-
 
 </html>

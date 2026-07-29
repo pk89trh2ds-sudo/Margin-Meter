@@ -1,345 +1,217 @@
-/* ==========================================
-   CONTRACTOR PROFIT CALCULATOR
-   Production Styles
-========================================== */
-* {
-    box-sizing: border-box;
+*{
+box-sizing:border-box;
 }
 
 
-body {
+body{
 
-    margin:0;
+margin:0;
 
-    padding:0;
+font-family:Arial, sans-serif;
 
-    font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
+background:#f4f6f8;
 
-    background:#f4f6f8;
-
-    color:#1f2937;
+color:#1f2937;
 
 }
 
 
+.container{
 
-.container {
+max-width:700px;
 
-    width:100%;
+margin:auto;
 
-    max-width:700px;
-
-    margin:auto;
-
-    padding:20px;
+padding:20px;
 
 }
 
 
 
-header {
+header{
 
-    text-align:center;
+text-align:center;
 
-    margin-bottom:25px;
-
-}
-
-
-
-header h1 {
-
-    font-size:42px;
-
-    margin-bottom:8px;
-
-    color:#111827;
+margin-bottom:25px;
 
 }
 
 
 
-header p {
+header h1{
 
-    color:#4b5563;
-
-    font-size:18px;
+font-size:42px;
 
 }
 
 
 
+.card{
 
+background:white;
 
-.card {
+padding:24px;
 
-    background:white;
+border-radius:16px;
 
-    border-radius:16px;
+margin-bottom:20px;
 
-    padding:24px;
-
-    margin-bottom:20px;
-
-    box-shadow:
-    0 4px 15px rgba(0,0,0,.08);
+box-shadow:0 4px 15px rgba(0,0,0,.08);
 
 }
 
 
 
+input{
 
+width:100%;
 
-h2 {
+padding:14px;
 
-    margin-top:0;
+font-size:18px;
 
-    font-size:24px;
+margin-bottom:12px;
 
-}
+border-radius:8px;
 
-
-
-
-
-label {
-
-    display:block;
-
-    margin-top:15px;
-
-    margin-bottom:6px;
-
-    font-weight:600;
+border:1px solid #ccc;
 
 }
 
 
 
+label{
 
+font-weight:bold;
 
-input {
+display:block;
 
-    width:100%;
-
-    padding:14px;
-
-    border-radius:10px;
-
-    border:1px solid #d1d5db;
-
-    font-size:18px;
+margin-top:10px;
 
 }
 
 
 
+button{
 
+padding:14px;
 
-button {
+border:none;
 
-    cursor:pointer;
+border-radius:10px;
 
-    border:none;
+cursor:pointer;
 
-    border-radius:10px;
-
-    padding:14px 18px;
-
-    font-size:16px;
-
-    font-weight:600;
+font-weight:bold;
 
 }
 
 
 
+.primary{
 
+width:100%;
 
-.preset-buttons {
+background:#2563eb;
 
-    display:grid;
+color:white;
 
-    grid-template-columns:
-
-    repeat(2,1fr);
-
-    gap:12px;
+font-size:17px;
 
 }
 
 
 
+.preset-buttons{
 
+display:grid;
 
-.preset-buttons button {
+grid-template-columns:1fr 1fr;
 
-    background:#e5e7eb;
-
-}
-
-
-
-
-
-.primary {
-
-    width:100%;
-
-    margin-top:20px;
-
-    background:#2563eb;
-
-    color:white;
+gap:10px;
 
 }
 
 
 
+.result-row{
 
+display:flex;
 
-.result-row {
+justify-content:space-between;
 
-    display:flex;
+padding:12px 0;
 
-    justify-content:space-between;
-
-    padding:14px 0;
-
-    border-bottom:1px solid #e5e7eb;
-
-    font-size:18px;
+border-bottom:1px solid #ddd;
 
 }
 
 
 
+.risk{
 
+padding:15px;
 
-.risk {
+margin-top:20px;
 
-    margin-top:20px;
+text-align:center;
 
-    padding:15px;
+border-radius:10px;
 
-    border-radius:10px;
-
-    background:#e5e7eb;
-
-    text-align:center;
-
-    font-weight:600;
+background:#eee;
 
 }
 
 
 
+.risk.bad{
 
-
-.risk.bad {
-
-    background:#fee2e2;
-
-    color:#991b1b;
+background:#fee2e2;
 
 }
 
 
 
+.risk.warning{
 
-
-.risk.warning {
-
-    background:#fef3c7;
-
-    color:#92400e;
+background:#fef3c7;
 
 }
 
 
 
+.risk.good{
 
-
-.risk.good {
-
-    background:#dcfce7;
-
-    color:#166534;
+background:#dcfce7;
 
 }
 
 
 
+.upgrade{
 
+border:3px solid #2563eb;
 
-.upgrade {
-
-    border:3px solid #2563eb;
-
-    text-align:center;
+text-align:center;
 
 }
 
 
 
+.hidden{
 
-
-.hidden {
-
-    display:none;
+display:none;
 
 }
-
-
-
-
-
-.upgrade h3 {
-
-    font-size:32px;
-
-}
-
-
-
-
-
-li {
-
-    margin-bottom:10px;
-
-}
-
-
 
 
 
 @media(max-width:500px){
 
+header h1{
 
-    header h1 {
+font-size:34px;
 
-        font-size:34px;
-
-    }
-
-
-    .container {
-
-        padding:12px;
-
-    }
-
-
-    .card {
-
-        padding:18px;
-
-    }
+}
 
 }

@@ -1,24 +1,9 @@
-/* ==========================================
-   MARGIN METER
-   Zero-Cost MVP JavaScript
-========================================== */
+// Margin Meter MVP
 
 
-/*
-PASTE YOUR STRIPE PAYMENT LINK HERE LATER
+const STRIPE_PAYMENT_LINK =
+"https://buy.stripe.com/9B63cwehHaev2jG47Mdwc00";
 
-Example:
-https://buy.stripe.com/xxxxx
-
-Until then, the button will show a message.
-*/const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/9B63cwehHaev2jG47Mdwc00";
-function upgrade() {
-  window.open(STRIPE_PAYMENT_LINK, "https://buy.stripe.com/9B63cwehHaev2jG47Mdwc00");
-}
-
-/* ==========================================
-   FREE LIMIT SYSTEM
-========================================== */
 
 
 const FREE_DAILY_LIMIT = 1;
@@ -27,29 +12,23 @@ const FREE_DAILY_LIMIT = 1;
 
 function getUsage(){
 
-
-    const data =
-    localStorage.getItem(
-        "marginMeterUsage"
-    );
+let data = localStorage.getItem("marginMeterUsage");
 
 
-    if(!data){
+if(!data){
 
-        return {
+return {
 
-            count:0,
+count:0,
 
-            date:
-            new Date().toDateString()
+date:new Date().toDateString()
 
-        };
+};
 
-    }
-
+}
 
 
-    return JSON.parse(data);
+return JSON.parse(data);
 
 }
 
@@ -59,15 +38,10 @@ function getUsage(){
 
 function saveUsage(data){
 
-
-    localStorage.setItem(
-
-        "marginMeterUsage",
-
-        JSON.stringify(data)
-
-    );
-
+localStorage.setItem(
+"marginMeterUsage",
+JSON.stringify(data)
+);
 
 }
 
@@ -75,50 +49,29 @@ function saveUsage(data){
 
 
 
-
 function canCalculate(){
 
+let usage = getUsage();
 
-    let usage =
-    getUsage();
-
-
-
-    const today =
-    new Date().toDateString();
+let today = new Date().toDateString();
 
 
+if(usage.date !== today){
+
+usage = {
+
+count:0,
+
+date:today
+
+};
+
+saveUsage(usage);
+
+}
 
 
-    if(
-        usage.date !== today
-    ){
-
-        usage = {
-
-            count:0,
-
-            date:today
-
-        };
-
-    }
-
-
-
-
-    if(
-        usage.count >= FREE_DAILY_LIMIT
-    ){
-
-        return false;
-
-    }
-
-
-
-    return true;
-
+return usage.count < FREE_DAILY_LIMIT;
 
 }
 
@@ -128,161 +81,78 @@ function canCalculate(){
 
 function increaseUsage(){
 
-
-    let usage =
-    getUsage();
+let usage = getUsage();
 
 
-
-    const today =
-    new Date().toDateString();
+usage.count++;
 
 
-
-    if(
-        usage.date !== today
-    ){
-
-        usage = {
-
-            count:0,
-
-            date:today
-
-        };
-
-    }
-
-
-
-    usage.count++;
-
-
-
-    saveUsage(usage);
-
+saveUsage(usage);
 
 }
 
 
 
 
-
-
-
-/* ==========================================
-   PRESETS
-========================================== */
 
 
 
 function loadPreset(type){
 
 
-
-    const presets = {
-
-
-        drywall:{
-
-            materials:1500,
-
-            hours:40,
-
-            rate:50,
-
-            markup:25
-
-        },
+const presets = {
 
 
-
-        painting:{
-
-            materials:600,
-
-            hours:30,
-
-            rate:45,
-
-            markup:30
-
-        },
+drywall:{
+materials:1500,
+hours:40,
+rate:50,
+markup:25
+},
 
 
+painting:{
+materials:600,
+hours:30,
+rate:45,
+markup:30
+},
 
-        roofing:{
 
-            materials:3500,
+roofing:{
+materials:3500,
+hours:60,
+rate:65,
+markup:30
+},
 
-            hours:60,
 
-            rate:65,
+concrete:{
+materials:2500,
+hours:50,
+rate:55,
+markup:25
+}
 
-            markup:30
 
-        },
+};
 
 
 
-        concrete:{
-
-            materials:2500,
-
-            hours:50,
-
-            rate:55,
-
-            markup:25
-
-        }
+let p = presets[type];
 
 
-    };
+if(!p) return;
 
 
 
+document.getElementById("materials").value=p.materials;
 
+document.getElementById("hours").value=p.hours;
 
-    const preset =
-    presets[type];
+document.getElementById("rate").value=p.rate;
 
-
-
-    if(!preset){
-
-        return;
-
-    }
-
-
-
-    document.getElementById(
-        "materials"
-    ).value =
-    preset.materials;
-
-
-
-    document.getElementById(
-        "hours"
-    ).value =
-    preset.hours;
-
-
-
-    document.getElementById(
-        "rate"
-    ).value =
-    preset.rate;
-
-
-
-    document.getElementById(
-        "markup"
-    ).value =
-    preset.markup;
-
+document.getElementById("markup").value=p.markup;
 
 
 }
@@ -292,222 +162,82 @@ function loadPreset(type){
 
 
 
-
-/* ==========================================
-   CALCULATOR
-========================================== */
 
 
 function calculateProfit(){
 
 
+if(!canCalculate()){
 
-    if(!canCalculate()){
+showPaywall();
 
-
-        showPaywall();
-
-
-        return;
-
-    }
-
-
-
-
-
-    increaseUsage();
-
-
-
-
-    const materials =
-    Number(
-        document.getElementById(
-            "materials"
-        ).value
-    ) || 0;
-
-
-
-    const hours =
-    Number(
-        document.getElementById(
-            "hours"
-        ).value
-    ) || 0;
-
-
-
-    const rate =
-    Number(
-        document.getElementById(
-            "rate"
-        ).value
-    ) || 0;
-
-
-
-    const markup =
-    Number(
-        document.getElementById(
-            "markup"
-        ).value
-    ) || 0;
-
-
-
-
-
-    const labor =
-    hours * rate;
-
-
-
-    const cost =
-    materials + labor;
-
-
-
-    const price =
-    cost *
-    (1 + markup / 100);
-
-
-
-    const profit =
-    price - cost;
-
-
-
-    const margin =
-    price > 0
-    ?
-    (profit / price) * 100
-    :
-    0;
-
-
-
-
-
-    document.getElementById(
-        "totalCost"
-    ).innerText =
-    cost.toFixed(2);
-
-
-
-    document.getElementById(
-        "revenue"
-    ).innerText =
-    price.toFixed(2);
-
-
-
-    document.getElementById(
-        "profit"
-    ).innerText =
-    profit.toFixed(2);
-
-
-
-    document.getElementById(
-        "margin"
-    ).innerText =
-    margin.toFixed(1);
-
-
-
-
-
-    updateMessage(
-        margin
-    );
+return;
 
 }
 
 
+increaseUsage();
 
 
 
-/* ==========================================
-   PROFIT FEEDBACK
-========================================== */
+let materials =
+Number(document.getElementById("materials").value) || 0;
 
 
-function updateMessage(
-margin
-){
+let hours =
+Number(document.getElementById("hours").value) || 0;
 
 
-
-    const box =
-    document.getElementById(
-        "riskBox"
-    );
+let rate =
+Number(document.getElementById("rate").value) || 0;
 
 
-    const message =
-    document.getElementById(
-        "message"
-    );
+let markup =
+Number(document.getElementById("markup").value) || 0;
 
 
 
-
-    if(margin < 10){
-
-
-        box.className =
-        "risk bad";
+let labor =
+hours * rate;
 
 
-        box.innerText =
-        "Danger: Low profit margin";
+let cost =
+materials + labor;
 
 
-        message.innerText =
-        "This job may not cover mistakes, delays, or unexpected costs.";
+let price =
+cost * (1 + markup / 100);
 
 
-    }
+let profit =
+price - cost;
 
 
-
-    else if(margin < 20){
-
-
-        box.className =
-        "risk warning";
-
-
-        box.innerText =
-        "Warning: Tight margin";
-
-
-        message.innerText =
-        "Consider increasing your price before accepting.";
-
-    }
+let margin =
+price > 0 ?
+(profit / price) * 100 :
+0;
 
 
 
-    else{
+document.getElementById("totalCost").innerText =
+cost.toFixed(2);
 
 
-        box.className =
-        "risk good";
+document.getElementById("revenue").innerText =
+price.toFixed(2);
 
 
-        box.innerText =
-        "Healthy profit margin";
+document.getElementById("profit").innerText =
+profit.toFixed(2);
 
 
-        message.innerText =
-        "This job appears priced safely.";
+document.getElementById("margin").innerText =
+margin.toFixed(1);
 
-    }
+
+
+updateMessage(margin);
 
 
 }
@@ -518,36 +248,73 @@ margin
 
 
 
+function updateMessage(margin){
 
-/* ==========================================
-   PAYWALL
-========================================== */
+
+let box =
+document.getElementById("riskBox");
+
+
+let message =
+document.getElementById("message");
+
+
+
+if(margin < 10){
+
+box.className="risk bad";
+
+box.innerText="Danger: Low profit margin";
+
+message.innerText="This job may not cover mistakes or unexpected costs.";
+
+}
+
+
+else if(margin < 20){
+
+box.className="risk warning";
+
+box.innerText="Warning: Tight margin";
+
+message.innerText="Consider increasing your price.";
+
+}
+
+
+else{
+
+box.className="risk good";
+
+box.innerText="Healthy profit margin";
+
+message.innerText="This job appears priced safely.";
+
+}
+
+
+}
+
+
+
+
+
 
 
 function showPaywall(){
 
 
-    document
-    .getElementById(
-        "upgradeBox"
-    )
-    .classList
-    .remove(
-        "hidden"
-    );
+document
+.getElementById("upgradeBox")
+.classList
+.remove("hidden");
 
 
-
-    document
-    .getElementById(
-        "upgradeBox"
-    )
-    .scrollIntoView({
-
-        behavior:"smooth"
-
-    });
-
+document
+.getElementById("upgradeBox")
+.scrollIntoView({
+behavior:"smooth"
+});
 
 
 }
@@ -558,38 +325,11 @@ function showPaywall(){
 
 
 
-
-/* ==========================================
-   STRIPE UPGRADE
-========================================== */
-
-
 function upgrade(){
 
 
-
-    if(
-        STRIPE_PAYMENT_LINK
-    ){
-
-
-        window.location.href =
-        STRIPE_PAYMENT_LINK;
-
-
-    }
-
-    else{
-
-
-        alert(
-
-        "Stripe payment link will be connected here."
-
-        );
-
-
-    }
+window.location.href =
+STRIPE_PAYMENT_LINK;
 
 
 }
