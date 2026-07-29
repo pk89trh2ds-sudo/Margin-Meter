@@ -1,6 +1,19 @@
-const STRIPE_PAYMENT_LINK =
-"https://buy.stripe.com/9B63cwehHaev2jG47Mdwc00";
+// ===============================
+// STRIPE LINKS
+// ===============================
 
+const STRIPE_MONTHLY_LINK =
+"https://buy.stripe.com/5kQ7sMa1r3Q70byawadwc02";
+
+
+const STRIPE_LIFETIME_LINK =
+"https://buy.stripe.com/14AbJ21uV72j8I45bQdwc03";
+
+
+
+// ===============================
+// FREE USAGE LIMIT
+// ===============================
 
 const FREE_DAILY_LIMIT = 1;
 
@@ -14,8 +27,11 @@ let data = localStorage.getItem("marginMeterUsage");
 if(!data){
 
 return {
+
 count:0,
+
 date:new Date().toDateString()
+
 };
 
 }
@@ -24,6 +40,7 @@ date:new Date().toDateString()
 return JSON.parse(data);
 
 }
+
 
 
 
@@ -48,16 +65,22 @@ let usage = getUsage();
 let today = new Date().toDateString();
 
 
+
 if(usage.date !== today){
 
 usage = {
+
 count:0,
+
 date:today
+
 };
+
 
 saveUsage(usage);
 
 }
+
 
 
 return usage.count < FREE_DAILY_LIMIT;
@@ -72,7 +95,9 @@ function increaseUsage(){
 
 let usage = getUsage();
 
+
 usage.count++;
+
 
 saveUsage(usage);
 
@@ -82,6 +107,11 @@ saveUsage(usage);
 
 
 
+// ===============================
+// PRESETS
+// ===============================
+
+
 function loadPreset(type){
 
 
@@ -89,34 +119,54 @@ const presets = {
 
 
 drywall:{
+
 materials:1500,
+
 hours:40,
+
 rate:50,
+
 markup:25
+
 },
 
 
 painting:{
+
 materials:600,
+
 hours:30,
+
 rate:45,
+
 markup:30
+
 },
 
 
 roofing:{
+
 materials:3500,
+
 hours:60,
+
 rate:65,
+
 markup:30
+
 },
 
 
 concrete:{
+
 materials:2500,
+
 hours:50,
+
 rate:55,
+
 markup:25
+
 }
 
 
@@ -125,6 +175,14 @@ markup:25
 
 
 let preset = presets[type];
+
+
+if(!preset){
+
+return;
+
+}
+
 
 
 document.getElementById("materials").value =
@@ -149,7 +207,9 @@ preset.markup;
 
 
 
-
+// ===============================
+// CALCULATOR
+// ===============================
 
 
 function calculateProfit(){
@@ -185,16 +245,24 @@ Number(document.getElementById("markup").value) || 0;
 
 
 
-let labor = hours * rate;
+let labor =
+hours * rate;
 
 
-let cost = materials + labor;
+
+let cost =
+materials + labor;
 
 
-let price = cost * (1 + markup / 100);
+
+let price =
+cost * (1 + markup / 100);
 
 
-let profit = price - cost;
+
+let profit =
+price - cost;
+
 
 
 let margin =
@@ -206,16 +274,20 @@ price > 0
 
 
 
+
 document.getElementById("totalCost").innerText =
 cost.toFixed(2);
+
 
 
 document.getElementById("revenue").innerText =
 price.toFixed(2);
 
 
+
 document.getElementById("profit").innerText =
 profit.toFixed(2);
+
 
 
 document.getElementById("margin").innerText =
@@ -227,8 +299,6 @@ updateMessage(margin);
 
 
 }
-
-
 
 
 
@@ -249,31 +319,53 @@ document.getElementById("message");
 
 if(margin < 10){
 
-box.className="risk bad";
 
-box.innerText="Danger: Low profit margin";
+box.className =
+"risk bad";
 
-message.innerText="This job may not cover mistakes or unexpected costs.";
+
+box.innerText =
+"Danger: Low profit margin";
+
+
+message.innerText =
+"This job may not cover mistakes or unexpected costs.";
 
 }
+
+
 
 else if(margin < 20){
 
-box.className="risk warning";
 
-box.innerText="Warning: Tight margin";
+box.className =
+"risk warning";
 
-message.innerText="Consider increasing your price.";
+
+box.innerText =
+"Warning: Tight margin";
+
+
+message.innerText =
+"Consider increasing your price.";
 
 }
+
+
 
 else{
 
-box.className="risk good";
 
-box.innerText="Healthy profit margin";
+box.className =
+"risk good";
 
-message.innerText="This job appears priced safely.";
+
+box.innerText =
+"Healthy profit margin";
+
+
+message.innerText =
+"This job appears priced safely.";
 
 }
 
@@ -284,7 +376,9 @@ message.innerText="This job appears priced safely.";
 
 
 
-
+// ===============================
+// PAYWALL
+// ===============================
 
 
 function showPaywall(){
@@ -296,10 +390,13 @@ document
 .remove("hidden");
 
 
+
 document
 .getElementById("upgradeBox")
 .scrollIntoView({
+
 behavior:"smooth"
+
 });
 
 
@@ -311,12 +408,17 @@ behavior:"smooth"
 
 
 
+// ===============================
+// STRIPE UPGRADES
+// ===============================
 
 
-function upgrade(){
+function upgradeMonthly(){
+
 
 window.location.href =
-STRIPE_PAYMENT_LINK;
+STRIPE_MONTHLY_LINK;
+
 
 }
 
@@ -324,14 +426,22 @@ STRIPE_PAYMENT_LINK;
 
 
 
+function upgradeLifetime(){
+
+
+window.location.href =
+STRIPE_LIFETIME_LINK;
+
+
+}
 
 
 
 
-// ==========================
+
+// ===============================
 // SAVED ESTIMATES
-// ==========================
-
+// ===============================
 
 
 function saveEstimate(){
@@ -341,33 +451,47 @@ let name =
 document.getElementById("jobName").value;
 
 
+
 if(!name){
 
-name="Unnamed Job";
+name =
+"Unnamed Job";
 
 }
 
 
 
+
+
 let estimate = {
 
-id:Date.now(),
+
+id:
+Date.now(),
+
 
 name:name,
+
 
 cost:
 document.getElementById("totalCost").innerText,
 
+
 price:
 document.getElementById("revenue").innerText,
+
 
 profit:
 document.getElementById("profit").innerText,
 
+
 margin:
 document.getElementById("margin").innerText
 
+
 };
+
+
 
 
 
@@ -376,6 +500,7 @@ JSON.parse(
 localStorage.getItem("savedEstimates")
 )
 || [];
+
 
 
 
@@ -393,7 +518,11 @@ JSON.stringify(saved)
 displayEstimates();
 
 
+
 }
+
+
+
 
 
 
@@ -402,15 +531,18 @@ displayEstimates();
 function displayEstimates(){
 
 
-let box =
+let container =
 document.getElementById("savedEstimates");
 
 
-if(!box){
+
+if(!container){
 
 return;
 
 }
+
+
 
 
 
@@ -422,10 +554,14 @@ localStorage.getItem("savedEstimates")
 
 
 
+
+
 if(saved.length === 0){
 
-box.innerHTML =
+
+container.innerHTML =
 "No saved estimates yet.";
+
 
 return;
 
@@ -433,39 +569,61 @@ return;
 
 
 
-box.innerHTML="";
+
+container.innerHTML = "";
 
 
 
-saved.forEach(item => {
 
 
-box.innerHTML += `
+saved.forEach(function(item){
+
+
+
+container.innerHTML += `
 
 <div class="estimate-card">
 
 <h3>${item.name}</h3>
 
-<p>Cost: $${item.cost}</p>
+<p>
+Cost: $${item.cost}
+</p>
 
-<p>Price: $${item.price}</p>
+<p>
+Price: $${item.price}
+</p>
 
-<p>Profit: $${item.profit}</p>
+<p>
+Profit: $${item.profit}
+</p>
 
-<p>Margin: ${item.margin}%</p>
+<p>
+Margin: ${item.margin}%
+</p>
+
 
 <button onclick="deleteEstimate(${item.id})">
+
 Delete
+
 </button>
+
 
 </div>
 
 `;
 
+
+
 });
 
 
 }
+
+
+
+
 
 
 
@@ -482,7 +640,12 @@ localStorage.getItem("savedEstimates")
 
 
 saved =
-saved.filter(item => item.id !== id);
+saved.filter(function(item){
+
+return item.id !== id;
+
+});
+
 
 
 
@@ -495,12 +658,19 @@ JSON.stringify(saved)
 
 displayEstimates();
 
+
 }
 
 
 
 
-window.onload=function(){
+
+// ===============================
+// STARTUP
+// ===============================
+
+
+window.onload = function(){
 
 displayEstimates();
 

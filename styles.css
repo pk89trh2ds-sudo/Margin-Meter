@@ -1,13 +1,16 @@
 *{
+
 box-sizing:border-box;
+
 }
+
 
 
 body{
 
 margin:0;
 
-font-family:Arial,sans-serif;
+font-family:Arial, sans-serif;
 
 background:#f4f6f8;
 
@@ -33,6 +36,8 @@ header{
 
 text-align:center;
 
+margin-bottom:25px;
+
 }
 
 
@@ -40,6 +45,8 @@ text-align:center;
 header h1{
 
 font-size:42px;
+
+margin-bottom:10px;
 
 }
 
@@ -51,11 +58,19 @@ background:white;
 
 padding:24px;
 
-margin:20px 0;
+margin-bottom:20px;
 
 border-radius:16px;
 
 box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+h2{
+
+margin-top:0;
 
 }
 
@@ -86,6 +101,8 @@ display:block;
 font-weight:bold;
 
 margin-top:10px;
+
+margin-bottom:5px;
 
 }
 
@@ -149,6 +166,14 @@ gap:10px;
 
 
 
+.preset-buttons button{
+
+background:#e5e7eb;
+
+}
+
+
+
 .result-row{
 
 display:flex;
@@ -167,11 +192,13 @@ border-bottom:1px solid #ddd;
 
 padding:15px;
 
-border-radius:10px;
-
 margin-top:20px;
 
+border-radius:10px;
+
 text-align:center;
+
+background:#f3f4f6;
 
 }
 
@@ -211,6 +238,36 @@ text-align:center;
 
 
 
+.pricing-option{
+
+margin-top:20px;
+
+padding:20px;
+
+border-radius:12px;
+
+background:#f9fafb;
+
+border:1px solid #ddd;
+
+}
+
+
+
+.lifetime-btn{
+
+width:100%;
+
+background:#f59e0b;
+
+color:white;
+
+font-size:17px;
+
+}
+
+
+
 .hidden{
 
 display:none;
@@ -245,12 +302,36 @@ color:white;
 
 
 
+ul{
+
+padding-left:20px;
+
+}
+
+
+
 @media(max-width:500px){
+
 
 header h1{
 
 font-size:34px;
 
 }
+
+
+.container{
+
+padding:12px;
+
+}
+
+
+.card{
+
+padding:18px;
+
+}
+
 
 }
