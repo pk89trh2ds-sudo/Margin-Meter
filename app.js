@@ -11,106 +11,10 @@ const STRIPE_LIFETIME_LINK =
 
 
 
-// ===============================
-// FREE USAGE LIMIT
-// ===============================
-
-const FREE_DAILY_LIMIT = 1;
-
-
-
-function getUsage(){
-
-let data = localStorage.getItem("marginMeterUsage");
-
-
-if(!data){
-
-return {
-
-count:0,
-
-date:new Date().toDateString()
-
-};
-
-}
-
-
-return JSON.parse(data);
-
-}
-
-
-
-
-
-function saveUsage(data){
-
-localStorage.setItem(
-"marginMeterUsage",
-JSON.stringify(data)
-);
-
-}
-
-
-
-
-
-function canCalculate(){
-
-let usage = getUsage();
-
-let today = new Date().toDateString();
-
-
-
-if(usage.date !== today){
-
-usage = {
-
-count:0,
-
-date:today
-
-};
-
-
-saveUsage(usage);
-
-}
-
-
-
-return usage.count < FREE_DAILY_LIMIT;
-
-}
-
-
-
-
-
-function increaseUsage(){
-
-let usage = getUsage();
-
-
-usage.count++;
-
-
-saveUsage(usage);
-
-}
-
-
-
-
 
 // ===============================
-// PRESETS
+// TRADE PRESETS
 // ===============================
-
 
 function loadPreset(type){
 
@@ -119,54 +23,34 @@ const presets = {
 
 
 drywall:{
-
 materials:1500,
-
 hours:40,
-
 rate:50,
-
 markup:25
-
 },
 
 
 painting:{
-
 materials:600,
-
 hours:30,
-
 rate:45,
-
 markup:30
-
 },
 
 
 roofing:{
-
 materials:3500,
-
 hours:60,
-
 rate:65,
-
 markup:30
-
 },
 
 
 concrete:{
-
 materials:2500,
-
 hours:50,
-
 rate:55,
-
 markup:25
-
 }
 
 
@@ -174,7 +58,7 @@ markup:25
 
 
 
-let preset = presets[type];
+const preset = presets[type];
 
 
 if(!preset){
@@ -211,64 +95,50 @@ preset.markup;
 // CALCULATOR
 // ===============================
 
-
 function calculateProfit(){
 
 
-if(!canCalculate()){
-
-showPaywall();
-
-return;
-
-}
-
-
-increaseUsage();
-
-
-
-let materials =
+const materials =
 Number(document.getElementById("materials").value) || 0;
 
 
-let hours =
+const hours =
 Number(document.getElementById("hours").value) || 0;
 
 
-let rate =
+const rate =
 Number(document.getElementById("rate").value) || 0;
 
 
-let markup =
+const markup =
 Number(document.getElementById("markup").value) || 0;
 
 
 
-let labor =
+const labor =
 hours * rate;
 
 
 
-let cost =
+const totalCost =
 materials + labor;
 
 
 
-let price =
-cost * (1 + markup / 100);
+const customerPrice =
+totalCost * (1 + markup / 100);
 
 
 
-let profit =
-price - cost;
+const profit =
+customerPrice - totalCost;
 
 
 
-let margin =
-price > 0
+const margin =
+customerPrice > 0
 ?
-(profit / price) * 100
+(profit / customerPrice) * 100
 :
 0;
 
@@ -276,12 +146,12 @@ price > 0
 
 
 document.getElementById("totalCost").innerText =
-cost.toFixed(2);
+totalCost.toFixed(2);
 
 
 
 document.getElementById("revenue").innerText =
-price.toFixed(2);
+customerPrice.toFixed(2);
 
 
 
@@ -295,7 +165,7 @@ margin.toFixed(1);
 
 
 
-updateMessage(margin);
+updateRisk(margin);
 
 
 }
@@ -305,14 +175,15 @@ updateMessage(margin);
 
 
 
-function updateMessage(margin){
+
+function updateRisk(margin){
 
 
-let box =
+const box =
 document.getElementById("riskBox");
 
 
-let message =
+const message =
 document.getElementById("message");
 
 
@@ -325,14 +196,14 @@ box.className =
 
 
 box.innerText =
-"Danger: Low profit margin";
+"Low Profit Margin";
 
 
 message.innerText =
-"This job may not cover mistakes or unexpected costs.";
+"This job may be risky.";
+
 
 }
-
 
 
 else if(margin < 20){
@@ -343,14 +214,14 @@ box.className =
 
 
 box.innerText =
-"Warning: Tight margin";
+"Tight Profit Margin";
 
 
 message.innerText =
-"Consider increasing your price.";
+"Consider increasing price.";
+
 
 }
-
 
 
 else{
@@ -361,14 +232,34 @@ box.className =
 
 
 box.innerText =
-"Healthy profit margin";
+"Healthy Profit Margin";
 
 
 message.innerText =
-"This job appears priced safely.";
+"This job has a safer margin.";
+
 
 }
 
+
+}
+// ===============================
+// STRIPE UPGRADES
+// ===============================
+
+function upgradeMonthly(){
+
+window.location.href =
+STRIPE_MONTHLY_LINK;
+
+}
+
+
+
+function upgradeLifetime(){
+
+window.location.href =
+STRIPE_LIFETIME_LINK;
 
 }
 
@@ -377,18 +268,58 @@ message.innerText =
 
 
 // ===============================
-// PAYWALL
+// SIMPLE PAYWALL
 // ===============================
 
+function checkUsage(){
 
-function showPaywall(){
+
+let used =
+localStorage.getItem("dailyUse");
+
+
+let today =
+new Date().toDateString();
+
+
+
+let saved =
+JSON.parse(used);
+
+
+
+if(!saved || saved.date !== today){
+
+
+localStorage.setItem(
+
+"dailyUse",
+
+JSON.stringify({
+
+date:today,
+
+count:0
+
+})
+
+);
+
+
+return true;
+
+
+}
+
+
+
+if(saved.count >= 1){
 
 
 document
 .getElementById("upgradeBox")
 .classList
 .remove("hidden");
-
 
 
 document
@@ -400,24 +331,13 @@ behavior:"smooth"
 });
 
 
+return false;
+
+
 }
 
 
-
-
-
-
-
-// ===============================
-// STRIPE UPGRADES
-// ===============================
-
-
-function upgradeMonthly(){
-
-
-window.location.href =
-STRIPE_MONTHLY_LINK;
+return true;
 
 
 }
@@ -425,12 +345,48 @@ STRIPE_MONTHLY_LINK;
 
 
 
+function recordUse(){
 
-function upgradeLifetime(){
+
+let today =
+new Date().toDateString();
 
 
-window.location.href =
-STRIPE_LIFETIME_LINK;
+
+let saved =
+JSON.parse(
+localStorage.getItem("dailyUse")
+);
+
+
+
+if(!saved || saved.date !== today){
+
+
+saved = {
+
+date:today,
+
+count:0
+
+};
+
+
+}
+
+
+
+saved.count++;
+
+
+
+localStorage.setItem(
+
+"dailyUse",
+
+JSON.stringify(saved)
+
+);
 
 
 }
@@ -443,34 +399,18 @@ STRIPE_LIFETIME_LINK;
 // SAVED ESTIMATES
 // ===============================
 
-
 function saveEstimate(){
 
 
-let name =
-document.getElementById("jobName").value;
+
+const estimate = {
 
 
-
-if(!name){
-
-name =
-"Unnamed Job";
-
-}
+id:Date.now(),
 
 
-
-
-
-let estimate = {
-
-
-id:
-Date.now(),
-
-
-name:name,
+name:
+document.getElementById("jobName").value || "Unnamed Job",
 
 
 cost:
@@ -494,23 +434,27 @@ document.getElementById("margin").innerText
 
 
 
-
-let saved =
+let estimates =
 JSON.parse(
-localStorage.getItem("savedEstimates")
+
+localStorage.getItem("estimates")
+
 )
 || [];
 
 
 
 
-saved.push(estimate);
+estimates.push(estimate);
 
 
 
 localStorage.setItem(
-"savedEstimates",
-JSON.stringify(saved)
+
+"estimates",
+
+JSON.stringify(estimates)
+
 );
 
 
@@ -531,12 +475,13 @@ displayEstimates();
 function displayEstimates(){
 
 
-let container =
+
+const area =
 document.getElementById("savedEstimates");
 
 
 
-if(!container){
+if(!area){
 
 return;
 
@@ -544,43 +489,42 @@ return;
 
 
 
-
-
-let saved =
+let estimates =
 JSON.parse(
-localStorage.getItem("savedEstimates")
+
+localStorage.getItem("estimates")
+
 )
 || [];
 
 
 
 
+if(estimates.length === 0){
 
-if(saved.length === 0){
 
-
-container.innerHTML =
+area.innerHTML =
 "No saved estimates yet.";
 
 
 return;
+
 
 }
 
 
 
 
-container.innerHTML = "";
+area.innerHTML = "";
 
 
 
 
-
-saved.forEach(function(item){
-
+estimates.forEach(function(item){
 
 
-container.innerHTML += `
+
+area.innerHTML += `
 
 <div class="estimate-card">
 
@@ -627,22 +571,25 @@ Delete
 
 
 
-
 function deleteEstimate(id){
 
 
-let saved =
+let estimates =
 JSON.parse(
-localStorage.getItem("savedEstimates")
+
+localStorage.getItem("estimates")
+
 )
 || [];
 
 
 
-saved =
-saved.filter(function(item){
+estimates =
+estimates.filter(function(item){
+
 
 return item.id !== id;
+
 
 });
 
@@ -650,8 +597,11 @@ return item.id !== id;
 
 
 localStorage.setItem(
-"savedEstimates",
-JSON.stringify(saved)
+
+"estimates",
+
+JSON.stringify(estimates)
+
 );
 
 
@@ -669,9 +619,10 @@ displayEstimates();
 // STARTUP
 // ===============================
 
-
 window.onload = function(){
 
+
 displayEstimates();
+
 
 };

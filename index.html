@@ -9,7 +9,7 @@
 
 <title>Margin Meter | Contractor Profit Calculator</title>
 
-<meta name="description" content="Calculate contractor job costs, pricing, and profit margins before accepting work.">
+<meta name="description" content="Calculate contractor profit margins before accepting jobs.">
 
 <link rel="stylesheet" href="styles.css">
 
@@ -27,7 +27,7 @@
 <h1>Margin Meter</h1>
 
 <p>
-Know your true profit before you accept the job.
+Calculate your true job profit before you price the work.
 </p>
 
 </header>
@@ -35,36 +35,30 @@ Know your true profit before you accept the job.
 
 
 
-
 <section class="card">
 
 <h2>
-Choose Your Trade
+Trade Presets
 </h2>
 
 
 <div class="preset-buttons">
 
-
 <button onclick="loadPreset('drywall')">
 Drywall
 </button>
-
 
 <button onclick="loadPreset('painting')">
 Painting
 </button>
 
-
 <button onclick="loadPreset('roofing')">
 Roofing
 </button>
 
-
 <button onclick="loadPreset('concrete')">
 Concrete
 </button>
-
 
 </div>
 
@@ -75,13 +69,11 @@ Concrete
 
 
 
-
-
 <section class="card">
 
 
 <h2>
-Job Calculator
+Profit Calculator
 </h2>
 
 
@@ -90,11 +82,10 @@ Job Calculator
 Job Name
 </label>
 
-
-<input 
+<input
 id="jobName"
 type="text"
-placeholder="Example: Smith Bathroom Remodel"
+placeholder="Example: Kitchen Remodel"
 >
 
 
@@ -103,13 +94,11 @@ placeholder="Example: Smith Bathroom Remodel"
 Material Cost
 </label>
 
-
 <input
 id="materials"
 type="number"
-placeholder="Example: 2500"
+placeholder="2500"
 >
-
 
 
 
@@ -117,13 +106,11 @@ placeholder="Example: 2500"
 Labor Hours
 </label>
 
-
 <input
 id="hours"
 type="number"
-placeholder="Example: 40"
+placeholder="40"
 >
-
 
 
 
@@ -131,27 +118,23 @@ placeholder="Example: 40"
 Hourly Labor Rate
 </label>
 
-
 <input
 id="rate"
 type="number"
-placeholder="Example: 50"
+placeholder="50"
 >
-
 
 
 
 <label>
-Markup Percentage
+Markup %
 </label>
-
 
 <input
 id="markup"
 type="number"
-placeholder="Example: 25"
+placeholder="25"
 >
-
 
 
 
@@ -174,12 +157,7 @@ Save Estimate
 </button>
 
 
-
 </section>
-
-
-
-
 
 
 
@@ -189,9 +167,8 @@ Save Estimate
 
 
 <h2>
-Your Results
+Results
 </h2>
-
 
 
 <div class="result-row">
@@ -200,14 +177,11 @@ Your Results
 Total Cost
 </span>
 
-
 <strong>
 $<span id="totalCost">0</span>
 </strong>
 
-
 </div>
-
 
 
 
@@ -217,14 +191,11 @@ $<span id="totalCost">0</span>
 Customer Price
 </span>
 
-
 <strong>
 $<span id="revenue">0</span>
 </strong>
 
-
 </div>
-
 
 
 
@@ -234,56 +205,39 @@ $<span id="revenue">0</span>
 Profit
 </span>
 
-
 <strong>
 $<span id="profit">0</span>
 </strong>
 
-
 </div>
-
 
 
 
 <div class="result-row">
 
 <span>
-Profit Margin
+Margin
 </span>
-
 
 <strong>
 <span id="margin">0</span>%
 </strong>
 
-
 </div>
-
 
 
 
 <div id="riskBox" class="risk">
 
-Enter job details to calculate
+Enter job information
 
 </div>
-
 
 
 <p id="message"></p>
 
 
-</section>
-
-
-
-
-
-
-
-
-
-<section class="card">
+</section><section class="card">
 
 
 <h2>
@@ -305,9 +259,6 @@ No saved estimates yet.
 
 
 
-
-
-
 <section id="upgradeBox" class="card upgrade hidden">
 
 
@@ -316,15 +267,10 @@ Unlock Contractor Pro
 </h2>
 
 
-
 <p>
 Stop losing money on jobs.
-
-Get unlimited calculations,
-saved estimates, and premium contractor tools.
+Get unlimited calculations, saved estimates, and premium contractor tools.
 </p>
-
-
 
 
 
@@ -351,7 +297,6 @@ Start Monthly Pro
 
 
 </div>
-
 
 
 
@@ -387,11 +332,7 @@ Get Lifetime Pro
 </div>
 
 
-
 </section>
-
-
-
 
 
 
@@ -409,24 +350,20 @@ Why Contractors Use Margin Meter
 <ul>
 
 <li>
-Stop underpricing jobs
+Avoid underpricing jobs
 </li>
-
 
 <li>
-Know your true margins
+Know your actual profit
 </li>
-
 
 <li>
 Price work with confidence
 </li>
 
-
 <li>
-Avoid losing money from mistakes
+Protect your margins
 </li>
-
 
 </ul>
 
@@ -438,10 +375,7 @@ Avoid losing money from mistakes
 
 
 
-
 </div>
-
-
 
 
 
