@@ -1,420 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stop Losing Money on Construction Delays</title>
 
-<title>Margin Meter | Contractor Profit Calculator</title>
+<style>
+body { margin:0; font-family:Arial, sans-serif; color:#111; }
+.container { max-width:1100px; margin:auto; padding:20px; }
 
-<meta name="description" content="Calculate contractor profit margins before accepting jobs.">
+.hero {
+  background:#0f172a;
+  color:#fff;
+  text-align:center;
+  padding:100px 20px;
+}
+.hero h1 { font-size:44px; margin-bottom:20px; }
+.hero p { font-size:20px; opacity:.9; }
 
-<link rel="stylesheet" href="styles.css">
+.btn {
+  display:inline-block;
+  margin-top:25px;
+  padding:16px 32px;
+  background:#22c55e;
+  color:#000;
+  font-weight:bold;
+  text-decoration:none;
+  border-radius:6px;
+}
 
+.section { padding:70px 20px; }
+.features { display:flex; flex-wrap:wrap; gap:20px; }
+.feature {
+  flex:1 1 30%;
+  background:#f8fafc;
+  padding:25px;
+  border-radius:8px;
+}
+
+.cta {
+  background:#22c55e;
+  text-align:center;
+  padding:70px 20px;
+}
+.cta h2 { margin-bottom:10px; }
+
+footer {
+  text-align:center;
+  padding:20px;
+  font-size:14px;
+  color:#666;
+}
+</style>
 </head>
-
 
 <body>
 
-
-<div class="container">
-
-
-<header>
-
-<h1>Margin Meter</h1>
-
-<p>
-Calculate your true job profit before you price the work.
-</p>
-
-</header>
-
-
-
-
-<section class="card">
-
-<h2>
-Trade Presets
-</h2>
-
-
-<div class="preset-buttons">
-
-<button onclick="loadPreset('drywall')">
-Drywall
-</button>
-
-<button onclick="loadPreset('painting')">
-Painting
-</button>
-
-<button onclick="loadPreset('roofing')">
-Roofing
-</button>
-
-<button onclick="loadPreset('concrete')">
-Concrete
-</button>
-
-</div>
-
-
+<section class="hero">
+  <div class="container">
+    <h1>Stop Losing Time & Money on Construction Projects</h1>
+    <p>Manage jobs, crews, schedules, and reports — all in one simple platform built for contractors.</p>
+    <a href="#" class="btn">Get Early Access</a>
+  </div>
 </section>
 
+<section class="section">
+  <div class="container">
+    <h2>Everything You Need to Run Jobs Smoothly</h2>
+    <div class="features">
 
+      <div class="feature">
+        <h3>📊 Real-Time Project Tracking</h3>
+        <p>Know exactly what’s happening on every job — without chasing updates.</p>
+      </div>
 
+      <div class="feature">
+        <h3>📝 Field Reports in Seconds</h3>
+        <p>Create daily logs, upload photos, and track issues directly from the field.</p>
+      </div>
 
+      <div class="feature">
+        <h3>👷 Team Coordination</h3>
+        <p>Keep crews, subs, and clients aligned with one source of truth.</p>
+      </div>
 
-<section class="card">
+      <div class="feature">
+        <h3>📅 Smart Scheduling</h3>
+        <p>Prevent delays with clear timelines and task management.</p>
+      </div>
 
+      <div class="feature">
+        <h3>💰 Budget Visibility</h3>
+        <p>Avoid cost overruns with real-time financial tracking.</p>
+      </div>
 
-<h2>
-Profit Calculator
-</h2>
+      <div class="feature">
+        <h3>📂 Document Control</h3>
+        <p>Store plans, permits, and files in one secure place.</p>
+      </div>
 
-
-
-<label>
-Job Name
-</label>
-
-<input
-id="jobName"
-type="text"
-placeholder="Example: Kitchen Remodel"
->
-
-
-
-<label>
-Material Cost
-</label>
-
-<input
-id="materials"
-type="number"
-placeholder="2500"
->
-
-
-
-<label>
-Labor Hours
-</label>
-
-<input
-id="hours"
-type="number"
-placeholder="40"
->
-
-
-
-<label>
-Hourly Labor Rate
-</label>
-
-<input
-id="rate"
-type="number"
-placeholder="50"
->
-
-
-
-<label>
-Markup %
-</label>
-
-<input
-id="markup"
-type="number"
-placeholder="25"
->
-
-
-
-<button
-class="primary"
-onclick="calculateProfit()">
-
-Calculate Profit
-
-</button>
-
-
-
-<button
-class="save-btn"
-onclick="saveEstimate()">
-
-Save Estimate
-
-</button>
-
-
+    </div>
+  </div>
 </section>
 
-
-
-
-
-<section class="card">
-
-
-<h2>
-Results
-</h2>
-
-
-<div class="result-row">
-
-<span>
-Total Cost
-</span>
-
-<strong>
-$<span id="totalCost">0</span>
-</strong>
-
-</div>
-
-
-
-<div class="result-row">
-
-<span>
-Customer Price
-</span>
-
-<strong>
-$<span id="revenue">0</span>
-</strong>
-
-</div>
-
-
-
-<div class="result-row">
-
-<span>
-Profit
-</span>
-
-<strong>
-$<span id="profit">0</span>
-</strong>
-
-</div>
-
-
-
-<div class="result-row">
-
-<span>
-Margin
-</span>
-
-<strong>
-<span id="margin">0</span>%
-</strong>
-
-</div>
-
-
-
-<div id="riskBox" class="risk">
-
-Enter job information
-
-</div>
-
-
-<p id="message"></p>
-
-<section class="card upgrade">
-
-<h2>
-Unlock Contractor Pro
-</h2>
-
-<p>
-Unlimited calculations, saved estimates, and premium contractor tools.
-</p>
-
-
-<button
-class="primary"
-onclick="upgradeMonthly()">
-
-$9/month Pro
-
-</button>
-
-
-<br><br>
-
-
-<button
-class="lifetime-btn"
-onclick="upgradeLifetime()">
-
-Lifetime Access $99
-
-</button>
-
-
+<section class="section">
+  <div class="container">
+    <h2>Built for Real Construction Work</h2>
+    <p>
+      Whether you're a general contractor, subcontractor, or project manager, this platform
+      removes the chaos from your workflow so you can focus on getting jobs done faster,
+      with fewer mistakes and better communication.
+    </p>
+  </div>
 </section>
 
-</section><section class="card">
-
-
-<h2>
-Saved Estimates
-</h2>
-
-
-<div id="savedEstimates">
-
-No saved estimates yet.
-
-</div>
-
-
+<section class="cta">
+  <h2>Start Running Jobs the Right Way</h2>
+  <p>No spreadsheets. No confusion. No delays.</p>
+  <a href="#" class="btn">Request Demo</a>
 </section>
 
-
-
-
-
-
-<section id="upgradeBox" class="card upgrade hidden">
-
-
-<h2>
-Unlock Contractor Pro
-</h2>
-
-
-<p>
-Stop losing money on jobs.
-Get unlimited calculations, saved estimates, and premium contractor tools.
-</p>
-
-
-
-<div class="pricing-option">
-
-
-<h3>
-Monthly Pro
-</h3>
-
-
-<h2>
-$9/month
-</h2>
-
-
-<button
-class="primary"
-onclick="upgradeMonthly()">
-
-Start Monthly Pro
-
-</button>
-
-
-</div>
-
-
-
-
-
-<div class="pricing-option">
-
-
-<h3>
-Lifetime Access
-</h3>
-
-
-<h2>
-$149 One Time
-</h2>
-
-
-<p>
-Pay once. Keep access forever.
-</p>
-
-
-<button
-class="lifetime-btn"
-onclick="upgradeLifetime()">
-
-Get Lifetime Pro
-
-</button>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-<section class="card">
-
-
-<h2>
-Why Contractors Use Margin Meter
-</h2>
-
-
-<ul>
-
-<li>
-Avoid underpricing jobs
-</li>
-
-<li>
-Know your actual profit
-</li>
-
-<li>
-Price work with confidence
-</li>
-
-<li>
-Protect your margins
-</li>
-
-</ul>
-
-
-</section>
-
-
-
-
-
-
-</div>
-
-
-
-<script src="app.js"></script>
-
+<footer>
+  © 2026 Your Company Name
+</footer>
 
 </body>
-
 </html>
